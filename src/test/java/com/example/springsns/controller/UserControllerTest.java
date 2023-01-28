@@ -79,7 +79,7 @@ public class UserControllerTest {
         String password = "password";
 
         //when
-        when(userService.login()).thenReturn("test_token");
+        when(userService.login(userName, password)).thenReturn("test_token");
         mvc.perform(post("/api/v1/users/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(new UserLoginRequest(userName, password)))
@@ -97,7 +97,7 @@ public class UserControllerTest {
         String password = "password";
 
         //when
-        when(userService.login()).thenThrow(new SnsApplicationException());
+        when(userService.login(userName, password)).thenThrow(new SnsApplicationException());
         mvc.perform(post("/api/v1/users/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(new UserLoginRequest(userName, password)))
@@ -115,7 +115,7 @@ public class UserControllerTest {
         String password = "password";
 
         //when
-        when(userService.login()).thenThrow(new SnsApplicationException());
+        when(userService.login(userName, password)).thenThrow(new SnsApplicationException());
         mvc.perform(post("/api/v1/users/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(new UserLoginRequest(userName, password)))
