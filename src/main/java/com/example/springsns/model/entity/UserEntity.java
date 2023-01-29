@@ -1,5 +1,6 @@
 package com.example.springsns.model.entity;
 
+import com.example.springsns.model.UserRole;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
@@ -27,7 +28,8 @@ public class UserEntity {
     private String password;
 
     @Column(name = "role")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private UserRole role = UserRole.USER;
 
     @Column(name = "registered_at")
     private Timestamp registerAt;
@@ -46,5 +48,12 @@ public class UserEntity {
     @PreUpdate
     void updatedAt() {
         this.updatedAt = Timestamp.from(Instant.now());
+    }
+
+    public static UserEntity of(String userName, String password) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUserName(userName);
+        userEntity.setPassword(password);
+        return userEntity;
     }
 }

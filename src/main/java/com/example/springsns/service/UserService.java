@@ -16,9 +16,11 @@ public class UserService {
     private final UserEntityRepository userEntityRepository;
 
     public User join(String userName, String password) {
-        Optional<UserEntity> userEntity = userEntityRepository.findByUserName(userName);
-        userEntityRepository.save(new UserEntity());
-        return new User();
+        userEntityRepository.findByUserName(userName).ifPresent(it -> {
+            throw new SnsApplicationException();
+        });
+        var userEntity = userEntityRepository.save(UserEntity.of(userName, password));
+        return User.fromEntity(userEntity);
     }
 
     public String login(String userName, String password) {
